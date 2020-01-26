@@ -1,0 +1,9 @@
+[
+  {
+    "artifact": "frcJava (in project FRC-Dialga-master)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "FRC-Dialga-master",
+    "language": "java"
+  }
+]

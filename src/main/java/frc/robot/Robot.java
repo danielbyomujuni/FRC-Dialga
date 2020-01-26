@@ -29,12 +29,16 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   // Controller init
-  private final Joystick lJoystick = new Joystick(0);
-  private final Joystick rJoystick = new Joystick(1);
-  private final Joystick xbox = new Joystick(2);
+  //private final Joystick lJoystick = new Joystick(0);
+  //private final Joystick rJoystick = new Joystick(1);
+  private final Joystick xbox = new Joystick(0);
   //Drive Train init
-  private final SpeedControllerGroup leftDrive = new SpeedControllerGroup(new Spark(0), new Spark(2));
-  private final SpeedControllerGroup rightDrive = new SpeedControllerGroup(new Spark(1), new Spark(3));
+  private final Spark frontLeft = new Spark(0);
+  private final Spark backLeft = new Spark(1);
+  private final Spark frontRight = new Spark(2);
+  private final Spark backRight = new Spark(3);
+  private final SpeedControllerGroup leftDrive = new SpeedControllerGroup(frontLeft, backLeft);
+  private final SpeedControllerGroup rightDrive = new SpeedControllerGroup(frontRight, backRight);
   private final DifferentialDrive tankDrive = new DifferentialDrive(leftDrive, rightDrive);
 
 
@@ -48,7 +52,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-
+    frontLeft.set(-1);
+    backRight.set(-1);
   }
 
   /**
@@ -104,7 +109,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    tankDrive.tankDrive(lJoystick.getY(), rJoystick.getY());
+    tankDrive.tankDrive(xbox.getRawAxis(1)/10, xbox.getRawAxis(5)/10);
   } 
 
   /**
